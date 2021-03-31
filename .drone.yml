@@ -17,7 +17,7 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     auth:
       from_secret: DOCKERHUB_TOKEN
-    build_args:
+    build_args_from_env:
       - TERRAFORM_VERSION=${TERRAFORM_VERSION}
       - TERRAGRUNT_VERSION=${TERRAGRUNT_VERSION}
     tags:
