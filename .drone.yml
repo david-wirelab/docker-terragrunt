@@ -4,14 +4,20 @@ matrix:
   TERRAGRUNT_VERSION:
     - 0.23.18
 
-pipeline:
+kind: pipeline
+name: default
 
-  build:
-    image: docker:17.09.0-ce
+steps:
+- name: docker-terragrunt
+  image: plugins/docker
+  dockerfile: Dockerfile
+  settings:
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    auth:
+      from_secret: DOCKERHUB_TOKEN
     repo: github.com/david-wirelab/docker-terragrunt.git
-    secrets: [ DOCKERHUB_USERNAME, DOCKERHUB_TOKEN ]
-    dockerfile: Dockerfile
-    force_tag: true
+    auto_tag: true
     build_args:
       - TERRAFORM_VERSION=${TERRAFORM_VERSION}
       - TERRAGRUNT_VERSION=${TERRAGRUNT_VERSION}
