@@ -25,5 +25,3 @@ steps:
       - ${DRONE_COMMIT_SHA}
       - ${DRONE_BUILD_NUMBER}
       - v${TERRAGRUNT_VERSION}
-    when:
-      event: push
