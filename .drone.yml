@@ -1,9 +1,3 @@
-matrix:
-  TERRAFORM_VERSION:
-    - 0.12.25
-  TERRAGRUNT_VERSION:
-    - 0.23.18
-
 kind: pipeline
 name: docker-terragrunt
 
@@ -11,6 +5,9 @@ steps:
 - name: build and publish
   image: plugins/docker
   dockerfile: Dockerfile
+  environment:
+    TERRAFORM_VERSION: 0.12.25
+    TERRAGRUNT_VERSION: 0.23.18
   settings:
     repo: wirelab/docker-terragrunt
     username:
@@ -18,8 +15,8 @@ steps:
     auth:
       from_secret: DOCKERHUB_TOKEN
     build_args_from_env:
-      - TERRAFORM_VERSION=${TERRAFORM_VERSION}
-      - TERRAGRUNT_VERSION=${TERRAGRUNT_VERSION}
+      - TERRAFORM_VERSION
+      - TERRAGRUNT_VERSION
     tags:
       - ${DRONE_COMMIT_SHA}
       - ${DRONE_BUILD_NUMBER}
