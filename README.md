@@ -1,5 +1,7 @@
 # Docker Terragrunt
 
+[![Build Status](/api/badges/david-wirelab/docker-terragrunt/status.svg)](/david-wirelab/docker-terragrunt)
+
 [Terragrunt](https://github.com/gruntwork-io/terragrunt/) running with Terraform version 0.13.4
 
 ## Content overview
