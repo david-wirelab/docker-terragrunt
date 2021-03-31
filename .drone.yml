@@ -5,7 +5,7 @@ matrix:
     - 0.23.18
 
 kind: pipeline
-name: default
+name: docker-terragrunt
 
 steps:
 - name: docker-terragrunt
@@ -16,7 +16,7 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     auth:
       from_secret: DOCKERHUB_TOKEN
-    repo: github.com/david-wirelab/docker-terragrunt.git
+    repo: wirelab/docker-terragrunt
     auto_tag: true
     build_args:
       - TERRAFORM_VERSION=${TERRAFORM_VERSION}
