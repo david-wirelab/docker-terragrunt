@@ -1,0 +1,23 @@
+matrix:
+  TERRAFORM_VERSION:
+    - 0.12.25
+  TERRAGRUNT_VERSION:
+    - 0.23.18
+
+pipeline:
+
+  build:
+    image: docker:17.09.0-ce
+    repo: github.com/david-wirelab/docker-terragrunt.git
+    secrets: [ DOCKERHUB_USERNAME, DOCKERHUB_TOKEN ]
+    dockerfile: Dockerfile
+    force_tag: true
+    build_args:
+      - TERRAFORM_VERSION=${TERRAFORM_VERSION}
+      - TERRAGRUNT_VERSION=${TERRAGRUNT_VERSION}
+    tags:
+      - ${DRONE_COMMIT_SHA}
+      - ${DRONE_BUILD_NUMBER}
+      - v${TERRAGRUNT_VERSION}
+    when:
+      event: push
