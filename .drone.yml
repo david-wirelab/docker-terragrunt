@@ -3,7 +3,7 @@ name: docker-terragrunt
 
 steps:
 - name: build and publish
-  image: docker:17.09.0-ce
+  image: plugins/docker
   dockerfile: Dockerfile
   environment:
     TERRAFORM_VERSION: 0.13.4
