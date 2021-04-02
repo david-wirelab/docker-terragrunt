@@ -3,11 +3,11 @@ name: docker-terragrunt
 
 steps:
 - name: build and publish
-  image: plugins/docker
+  image: docker:17.09.0-ce
   dockerfile: Dockerfile
   environment:
-    TERRAFORM_VERSION: 0.12.25
-    TERRAGRUNT_VERSION: 0.23.18
+    TERRAFORM_VERSION: 0.13.4
+    TERRAGRUNT_VERSION: 0.25.4
   settings:
     repo: wirelab/docker-terragrunt
     username:
