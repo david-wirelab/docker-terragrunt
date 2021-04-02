@@ -1,6 +1,6 @@
 # Docker Terragrunt
 
-[![Build Status](/api/badges/david-wirelab/docker-terragrunt/status.svg)](/david-wirelab/docker-terragrunt)
+![Drone (cloud)](https://img.shields.io/drone/build/david-wirelab/docker-terragrunt)
 
 [Terragrunt](https://github.com/gruntwork-io/terragrunt/) running with Terraform version 0.13.4
 
@@ -14,7 +14,7 @@ Defines objects to be ignored by Git.
 
 Defines what is packaged into the container.
 
-### .drone
+### .drone.yml
 
 Defines the pipeline steps.
 
@@ -24,6 +24,8 @@ The following variables are required:
 |-------------|:-----------:|:-------:|:-------:|---------|
 | TERRAFORM_VERSION | Version of Terraform | build-arg | N/A | true |
 | TERRGRUNT_VERSION | Version of Terragrunt | build-arg | N/A | true |
+| DOCKERHUB_USERNAME | Username for DockerHub | string | N/A | true |
+| DOCKERHUB_TOKEN | Access token for DockerHub | string | N/A | true |
 
 ### LICENSE
 
@@ -43,29 +45,28 @@ so that it can connect and interact with AWS APIs.
 ### CICD (Drone ~> 1) execution
 
 ```yaml
-matrix:
-  TERRAFORM_VERSION:
-    - 0.12.25
-  TERRAGRUNT_VERSION:
-    - 0.23.18
+kind: pipeline
+name: docker-terragrunt
 
-pipeline:
-
-  build:
-    image: docker:17.09.0-ce
-    repo: github.com/david-wirelab/docker-terragrunt.git
-    secrets: [ DOCKERHUB_USERNAME, DOCKERHUB_TOKEN ]
-    dockerfile: Dockerfile
-    force_tag: true
-    build_args:
-      - TERRAFORM_VERSION=${TERRAFORM_VERSION}
-      - TERRAGRUNT_VERSION=${TERRAGRUNT_VERSION}
+steps:
+- name: build and publish
+  image: plugins/docker
+  dockerfile: Dockerfile
+  environment:
+    TERRAFORM_VERSION: 0.13.4
+    TERRAGRUNT_VERSION: 0.25.4
+  settings:
+    repo: wirelab/docker-terragrunt
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_TOKEN
+    build_args_from_env:
+      - TERRAFORM_VERSION
+      - TERRAGRUNT_VERSION
     tags:
       - ${DRONE_COMMIT_SHA}
       - ${DRONE_BUILD_NUMBER}
-      - v${TERRAGRUNT_VERSION}
-    when:
-      event: push
 ```
 
 ### Environmental variables
@@ -82,4 +83,8 @@ version of Terragrunt and Terraform. It also needs AWS credentials during runtim
 
 ## Local build
 
-`docker build -t docker-terragrunt/v13 --build-arg TERRAFORM_VERSION=0.13.4 --build-arg TERRAGRUNT_VERSION=0.25.4 .`
+```bash
+docker build -t docker-terragrunt/v13 \
+--build-arg TERRAFORM_VERSION=0.13.4 \
+--build-arg TERRAGRUNT_VERSION=0.25.4 .
+```
