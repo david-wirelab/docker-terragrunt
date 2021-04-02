@@ -12,7 +12,7 @@ steps:
     repo: wirelab/docker-terragrunt
     username:
       from_secret: DOCKERHUB_USERNAME
-    auth:
+    password:
       from_secret: DOCKERHUB_TOKEN
     build_args_from_env:
       - TERRAFORM_VERSION
