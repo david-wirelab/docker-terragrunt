@@ -6,8 +6,8 @@ steps:
   image: plugins/docker
   dockerfile: Dockerfile
   environment:
-    TERRAFORM_VERSION: 0.13.4
-    TERRAGRUNT_VERSION: 0.25.4
+    TERRAFORM_VERSION: 0.11.14
+    TERRAGRUNT_VERSION: 0.14.0
   settings:
     repo: wirelab/docker-terragrunt
     username:
@@ -20,3 +20,4 @@ steps:
     tags:
       - ${DRONE_COMMIT_SHA}
       - ${DRONE_BUILD_NUMBER}
+      - v0.11.14
