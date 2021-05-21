@@ -10,10 +10,10 @@ RUN mkdir -p $HOME
 WORKDIR $HOME
 
 RUN apk add --update --upgrade --no-cache bash git openssh shadow jq
-RUN apk upgrade libtasn1=1.8.5-r0
-RUN apk upgrade musl=1.1.20-r5
-RUN apk upgrade curl=7.64.0-r2
-RUN apk upgrade libgcrypt=1.8.5-r0
+RUN apk upgrade libtasn1
+RUN apk upgrade musl
+RUN apk upgrade curl
+RUN apk upgrade libgcrypt
 
 # Add non-root runner user
 RUN groupadd -r runner && \
